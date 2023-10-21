@@ -55,7 +55,7 @@ namespace MMABooksTests
         }
 
         [Test]
-        public void TestSettersNameTooShort()
+        public void TestSettersNameStringEmpty()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => c.Name = "");
         }
@@ -89,7 +89,7 @@ namespace MMABooksTests
         }
 
         [Test]
-        public void TestSettersAddressTooShort()
+        public void TestSettersAddressStringEmpty()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => c.Address = "");
         }
@@ -109,7 +109,7 @@ namespace MMABooksTests
         }
 
         [Test]
-        public void TestSettersCityTooShort()
+        public void TestSettersCityStringEmpty()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => c.City = "");
         }
@@ -125,11 +125,11 @@ namespace MMABooksTests
         [Test]
         public void TestSettersStateTooLong()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => c.State = "012");
+            Assert.Throws<ArgumentOutOfRangeException>(() => c.State = "ORE");
         }
 
         [Test]
-        public void TestSettersStateTooShort()
+        public void TestSettersStateStringEmpty()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => c.State = "");
         }

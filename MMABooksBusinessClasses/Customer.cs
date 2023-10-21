@@ -118,7 +118,7 @@ namespace MMABooksBusinessClasses
                 if (value.Trim().Length >= 5 && value.Trim().Length <= 15)
                     zipcode = value;
                 else
-                    throw new ArgumentOutOfRangeException("Zipcode must be at least  5 characters and no more than 15 characters. ");
+                    throw new ArgumentOutOfRangeException("Zipcode must be at least 5 characters and no more than 15 characters. ");
             }
         }
 
