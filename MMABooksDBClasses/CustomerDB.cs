@@ -96,6 +96,7 @@ namespace MMABooksDBClasses
 
         public static bool DeleteCustomer(Customer customer)
         {
+            MySqlConnection connection = MMABooksDB.GetConnection();
             // get a connection to the database
             string deleteStatement =
                 "DELETE FROM Customers " +
@@ -105,23 +106,42 @@ namespace MMABooksDBClasses
                 "AND City = @City " +
                 "AND State = @State " +
                 "AND ZipCode = @ZipCode";
+            MySqlCommand deleteCommand = 
+                new MySqlCommand(deleteStatement, connection);
+            deleteCommand.Parameters.AddWithValue(
+                "@CustomerID", customer.CustomerID);
+            deleteCommand.Parameters.AddWithValue(
+                "@Name", customer.Name);
+            deleteCommand.Parameters.AddWithValue(
+                "@Address", customer.Address);
+            deleteCommand.Parameters.AddWithValue(
+                "@City", customer.City);
+            deleteCommand.Parameters.AddWithValue(
+                "@State", customer.State);
+            deleteCommand.Parameters.AddWithValue(
+                "@ZipCode", customer.ZipCode);
             // set up the command object
 
             try
             {
+                connection.Open();
                 // open the connection
+                int recordsReturned = deleteCommand.ExecuteNonQuery();
                 // execute the command
+                if (recordsReturned == 1)
+                    return true;
                 // if the number of records returned = 1, return true otherwise return false
             }
             catch (MySqlException ex)
             {
+                throw ex;
                 // throw the exception
             }
             finally
             {
+                connection.Close();
                 // close the connection
             }
-
             return false;
         }
 
