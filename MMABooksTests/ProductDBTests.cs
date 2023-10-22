@@ -64,7 +64,7 @@ namespace MMABooksTests
             
             Assert.IsTrue(ProductDB.UpdateProduct(oldProduct, newProduct));
             Assert.AreEqual(oldProduct.ProductCode, newProduct.ProductCode);
-            Assert.AreNotEqual(oldProduct.Description, newProduct.Description);
+            Assert.AreNotEqual("Old product test", newProduct.Description);
 
             ProductDB.DeleteProduct(newProduct);
             //Cleanup

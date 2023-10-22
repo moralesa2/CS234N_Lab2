@@ -73,7 +73,7 @@ namespace MMABooksTests
 
             Assert.IsTrue(CustomerDB.UpdateCustomer(oldCustomer, newCustomer));
             Assert.AreEqual(oldCustomer.CustomerID, newCustomer.CustomerID);
-            Assert.AreNotEqual(oldCustomer.Name, newCustomer.Name);
+            Assert.AreNotEqual("Mickey Mouse", newCustomer.Name);
             
             CustomerDB.DeleteCustomer(newCustomer);
             //deleting test data after test is complete
