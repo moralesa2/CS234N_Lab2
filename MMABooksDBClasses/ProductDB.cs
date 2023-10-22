@@ -124,5 +124,50 @@ namespace MMABooksDBClasses
             }
             return false;
         }
+
+        public static bool UpdateProduct(Product oldProduct, Product newProduct)
+        {
+            MySqlConnection connection = MMABooksDB.GetConnection();
+            string updateStatement =
+                "UPDATE Products SET " +
+                "Description = @NewDescription, " +
+                "UnitPrice = @NewUnitPrice, " +
+                "OnHandQuantity = @NewOnHandQuantity " +
+                "WHERE ProductCode = @OldProductCode " +
+                "AND Description = @OldDescription " +
+                "AND UnitPrice = @OldUnitPrice " +
+                "AND OnHandQuantity = @OldOnHandQuantity";
+            MySqlCommand updateCommand = new MySqlCommand(updateStatement, connection);
+            updateCommand.Parameters.AddWithValue(
+                "@NewDescription", newProduct.Description);
+            updateCommand.Parameters.AddWithValue(
+                "@NewUnitPrice", newProduct.UnitPrice);
+            updateCommand.Parameters.AddWithValue(
+                "@NewOnHandQuantity", newProduct.OnHandQuantity);
+            updateCommand.Parameters.AddWithValue(
+                "@OldProductCode", oldProduct.ProductCode);
+            updateCommand.Parameters.AddWithValue(
+                "@OldDescription", oldProduct.Description);
+            updateCommand.Parameters.AddWithValue(
+                "@OldUnitPrice", oldProduct.UnitPrice);
+            updateCommand.Parameters.AddWithValue(
+                "@OldOnHandQuantity", oldProduct.OnHandQuantity);
+            try
+            {
+                connection.Open();
+                int recordsAffected = updateCommand.ExecuteNonQuery();
+                if (recordsAffected == 1)
+                    return true;
+            }
+            catch (MySqlException ex) 
+            {
+                throw ex;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return false;
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace MMABooksTests
             Product p = new Product();
             p.ProductCode = "TESTCODE";
             p.Description = "Test description2";
-            p.UnitPrice = 102.01M;
+            p.UnitPrice = 102.01m;
             p.OnHandQuantity = 3;
 
             ProductDB.AddProduct(p);
@@ -49,7 +49,25 @@ namespace MMABooksTests
         [Test]
         public void TestUpdateProduct()
         {
+            Product oldProduct = new Product();
+            oldProduct.ProductCode = "TEST";
+            oldProduct.Description = "Old product test";
+            oldProduct.UnitPrice = 50.50m;
+            oldProduct.OnHandQuantity = 1;
+            ProductDB.AddProduct(oldProduct);
 
+            Product newProduct = new Product();
+            newProduct.ProductCode = oldProduct.ProductCode;
+            newProduct.Description = "New product test";
+            newProduct.UnitPrice = 75.15m;
+            newProduct.OnHandQuantity = 2;
+            
+            Assert.IsTrue(ProductDB.UpdateProduct(oldProduct, newProduct));
+            Assert.AreEqual(oldProduct.ProductCode, newProduct.ProductCode);
+            Assert.AreNotEqual(oldProduct.Description, newProduct.Description);
+
+            ProductDB.DeleteProduct(newProduct);
+            //Cleanup
         }
     }
 }
