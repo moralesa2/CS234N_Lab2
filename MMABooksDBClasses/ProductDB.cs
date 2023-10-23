@@ -33,8 +33,9 @@ namespace MMABooksDBClasses
                     product.Description = prodReader["Description"].ToString();
                     product.UnitPrice = (decimal)prodReader["UnitPrice"];
                     product.OnHandQuantity = (int)prodReader["OnHandQuantity"];
-                    return product;
+                    return product;                   
                 }
+
                 else
                 {
                     return null;
@@ -169,5 +170,46 @@ namespace MMABooksDBClasses
             }
             return false;
         }
+
+        public static List<Product> GetProductList()
+        {
+            List<Product> productList = new List<Product>();
+            MySqlConnection connection = MMABooksDB.GetConnection();
+            string selectStatement =
+                "SELECT ProductCode, Description, UnitPrice, OnHandQuantity " + 
+                "FROM Products " +
+                "ORDER BY ProductCode";
+            MySqlCommand selectCommand =
+                new MySqlCommand(selectStatement, connection);
+
+            try
+            {
+                connection.Open();
+                MySqlDataReader productReader =
+                    selectCommand.ExecuteReader();
+
+                while (productReader.Read())
+                {
+                    Product product = new Product();
+                    product.ProductCode = productReader["ProductCode"].ToString();
+                    product.Description = productReader["Description"].ToString();
+                    product.UnitPrice = (decimal)productReader["UnitPrice"];
+                    product.OnHandQuantity = (int)productReader["OnHandQuantity"];
+                    productList.Add(product);
+                }
+                productReader.Close();
+            }
+            catch (MySqlException ex) 
+            {
+                throw ex;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return productList;
+
+        }
+
     }
 }

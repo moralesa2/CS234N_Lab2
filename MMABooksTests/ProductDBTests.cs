@@ -69,5 +69,14 @@ namespace MMABooksTests
             ProductDB.DeleteProduct(newProduct);
             //Cleanup
         }
+
+        [Test]
+        public void TestGetProductList()
+        {
+            List<Product> products = ProductDB.GetProductList();
+            Assert.IsNotNull(products);
+            Assert.AreEqual(16, products.Count);
+            Assert.AreEqual("A4CS", products[0].ProductCode);
+        }
     }
 }
